@@ -1,9 +1,11 @@
 package com.example.lenovo.todo_list4;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,18 +41,50 @@ public class MainActivity extends Activity {
             public void run() {
                 customAdapter = new CustomCursorAdapter(MainActivity.this, databaseHelper.getAllData());
                 listView.setAdapter(customAdapter);
+
+
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, final long id) {
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setMessage("Are you sure,You want to delete task?");
+
+                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        databaseHelper.deleteItem(id);
+                        customAdapter.notifyDataSetChanged();
+                        new Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                customAdapter = new CustomCursorAdapter(MainActivity.this, databaseHelper.getAllData());
+                                listView.setAdapter(customAdapter);
+
+
+                            }
+                        });
+
+
+                        Toast.makeText(getApplicationContext(),"item removed",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
             }
         });
 
 
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        databaseHelper.deleteItem(id);
-                        Toast.makeText(getApplicationContext(),"item removed",Toast.LENGTH_SHORT).show();
-                    }
-                });
 
 
 

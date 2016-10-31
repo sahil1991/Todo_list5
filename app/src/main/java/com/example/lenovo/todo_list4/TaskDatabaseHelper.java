@@ -19,10 +19,10 @@ public class TaskDatabaseHelper {
     private static final String DATABASE_NAME = "mydatabase.db";
 
     // table configuration
-    private static final String TABLE_NAME = "person_table";         // Table name
+    private static final String TABLE_NAME = "task_table";         // Table name
     private static final String Task_TABLE_COLUMN_ID = "_id";     // a column named "_id" is required for cursor
-    private static final String Task_TABLE_COLUMN_NAME = "person_name";
-    private static final String Task_TABLE_COLUMN_DATE= "person_pin";
+    private static final String Task_TABLE_COLUMN_NAME = "task_name";
+    private static final String Task_TABLE_COLUMN_DATE= "task_date";
 
     public DatabaseOpenHelper openHelper;
     private SQLiteDatabase database;
@@ -35,14 +35,14 @@ public class TaskDatabaseHelper {
         database = openHelper.getWritableDatabase();
     }
 
-    public void insertData (String aPersonName, String aPersonPin) {
+    public void insertData (String taskname, String taskdate) {
 
         // we are using ContentValues to avoid sql format errors
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(Task_TABLE_COLUMN_NAME, aPersonName);
-        contentValues.put(Task_TABLE_COLUMN_DATE, aPersonPin);
+        contentValues.put(Task_TABLE_COLUMN_NAME, taskname);
+        contentValues.put(Task_TABLE_COLUMN_DATE, taskdate);
 
         database.insert(TABLE_NAME, null, contentValues);
     }

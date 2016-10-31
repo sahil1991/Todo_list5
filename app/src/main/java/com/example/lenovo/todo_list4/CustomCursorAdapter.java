@@ -46,6 +46,7 @@ Context context;
         TextView textViewPersonPIN = (TextView) view.findViewById(R.id.task_Date);
         textViewPersonPIN.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
         final String itemId = cursor.getString(cursor.getColumnIndex(cursor.getColumnName(0)));
+        
 
 
     }
